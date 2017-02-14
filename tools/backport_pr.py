@@ -55,7 +55,7 @@ def get_current_branch():
     branches = check_output(['git', 'branch'])
     for branch in branches.splitlines():
         if branch.startswith(b'*'):
-            return branch[1:].strip().decode('utf-8')
+            return branch[1:].strip().decode()
 
 def backport_pr(branch, num, project='ipython/ipython'):
     current_branch = get_current_branch()
@@ -118,9 +118,9 @@ backport_re = re.compile(r"(?:[Bb]ackport|[Mm]erge).*#(\d+)")
 def already_backported(branch, since_tag=None):
     """return set of PRs that have been backported already"""
     if since_tag is None:
-        since_tag = check_output(['git','describe', branch, '--abbrev=0']).decode('utf8').strip()
+        since_tag = check_output(['git','describe', branch, '--abbrev=0']).decode().strip()
     cmd = ['git', 'log', '%s..%s' % (since_tag, branch), '--oneline']
-    lines = check_output(cmd).decode('utf8')
+    lines = check_output(cmd).decode()
     return set(int(num) for num in backport_re.findall(lines))
 
 def should_backport(labels=None, milestone=None, project='ipython/ipython'):
