@@ -52,7 +52,7 @@ def test_ipython_embed():
         p = subprocess.Popen(cmd, env=env, stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate(_exit)
-        std = out.decode('UTF-8')
+        std = out.decode()
 
         nt.assert_equal(p.returncode, 0)
         nt.assert_in('3 . 14', std)
